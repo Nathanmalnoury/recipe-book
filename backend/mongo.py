@@ -1,4 +1,5 @@
 from mongoengine import connect
+
 from models.recipe import Recipe
 
 
@@ -7,12 +8,21 @@ class MongoClient:
         self.client = connect('recipe')
 
     def get_all_recipes(self):
-        return(Recipe.objects().to_json())
+        return Recipe.objects().exclude('content').to_json()
 
     def add_recipe(self, recipe):
+        """Add a recipe to mongoDB
+
+        Arguments:
+            recipe {dict} -- Dict containing the info about the recipe.
+                            {url:str, title:str, content:str, image_url:str}
+
+        Returns:
+            str -- id of the newly created entry
+        """
         new_recipe = Recipe(**recipe)
-        a = new_recipe.save()
-        return a.id
+        recipe_object = new_recipe.save()
+        return recipe_object.id
 
     def delete_all(self):
         Recipe.objects().delete()
@@ -22,7 +32,7 @@ class MongoClient:
         """Delete one item
 
         Arguments:
-            id_ {[type]} -- id of the item to delete.
+            id_ {[str]} -- id of the item to delete.
         """
         Recipe.objects(id=id_).delete()
         return None
@@ -37,25 +47,3 @@ class MongoClient:
             list -- Results got from the query. Might contain zero / one / several items
         """
         return Recipe.objects(**query)
-
-
-# if __name__ == "__main__":
-#     m = Mongo()
-#     test1 = {
-#         "url": "http://www.test.fr",
-#         "title": "first_test",
-#         "image_url": "http://www.test.img.fr",
-#     }
-#     m.hello_world()
-#     try:
-#         a = m.add_recipe(test1)
-#     except:
-#         print("Not added")
-#         pass
-
-#     obj = m.get({"title": "first_test"})
-#     print(obj[0].id)
-#     m.delete_one(id_=obj.id)
-#     print("deleted")
-
-#     print(m.get_all_recipes())

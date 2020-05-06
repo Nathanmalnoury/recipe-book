@@ -1,0 +1,5 @@
+.recipe-list {
+  margin: 15px;
+  /* background-color: sandybrown; */
+  flex-grow: 1;
+}
