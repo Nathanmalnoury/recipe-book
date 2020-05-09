@@ -15,9 +15,9 @@ export default class RecipeItem extends Component {
   openInWindow(e) {
     e.stopPropagation();
     console.log(this.props.item._id);
-    // TODO : use Create Portal and make a modal out of it.
+    // ! use Create Portal and make a modal out of it.
     let win = window.open(
-      `http://localhost:5300/recipe/${this.props.item._id.$oid}/view`
+      process.env.REACT_APP_API_URL + `/recipe/${this.props.item._id.$oid}/view`
     );
     win.focus();
   }
@@ -27,15 +27,13 @@ export default class RecipeItem extends Component {
 
   render() {
     return (
-      <div className="outer-frame" onClick={this.openInWindow}>
-        <div className="image-frame">
-          <img
-            className="recipe-picture"
-            src={this.props.item.image_url}
-            alt={this.props.item.title}
-          />
-        </div>
-        <div className="info-holder">
+      <div className="recipe-flex" onClick={this.openInWindow}>
+        <img
+          className="recipe-picture"
+          src={this.props.item.image_url}
+          alt={this.props.item.title}
+        />
+        <div className="no-overflow">
           <h6 className="recipe-title">{this.props.item.title}</h6>
         </div>
       </div>

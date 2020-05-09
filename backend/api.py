@@ -11,7 +11,6 @@ from scrapper import Scrapper
 app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "*"}})
 mongo = MongoClient()
-logging.getLogger('flask_cors')
 
 
 @app.route('/')
@@ -61,4 +60,4 @@ def delete_recipe(id_):
 
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=5300)
+    app.run(host='192.168.0.15', port=5300)

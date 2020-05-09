@@ -1,0 +1,10 @@
+.label-radio {
+  padding: 5px;
+  width: 300px;
+}
+.label-radio :hover {
+  background-color: salmon;
+}
+.label-radio label {
+  width: 100%;
+}

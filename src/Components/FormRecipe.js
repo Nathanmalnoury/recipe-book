@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "../CSS/FormRecipe.css";
+import TypeRecipeInput from "./TypeRecipeInput";
 
 export default class FormRecipe extends Component {
   initialState = {
     url: "",
     typeRecipe: "",
+    errorUrl: "",
+    errorType: "",
   };
   constructor(props) {
     super(props);
@@ -20,21 +23,26 @@ export default class FormRecipe extends Component {
 
   validateForm() {
     const { url, typeRecipe } = this.state;
+    let isOK = true;
     console.log(url, typeRecipe);
+
     if (typeRecipe === "") {
       console.log("Recipe type field is not selected");
-      return false;
+      this.setState({ errorType: "Please select a type of recipe" });
+      isOK = false;
     }
     if (!url) {
       console.log("URL field is empty");
-      return false;
+      this.setState({ errorUrl: "Please enter the url to the recipe" });
+      isOK = false;
     }
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       console.log(!url.startsWith("http://"), !url.startsWith("https://"));
       console.log("URL field is not properly formatted");
-      return false;
+      this.setState({ errorUrl: "Url is not properly formatted." });
+      isOK = false;
     }
-    return true;
+    return isOK;
   }
 
   createRecipe(event) {
@@ -72,12 +80,16 @@ export default class FormRecipe extends Component {
     }
   }
   handleClickRadio(event) {
+    console.log(event.target.value);
     this.setState({ typeRecipe: event.target.value });
   }
   render() {
+    console.log(this.state);
     return (
-      <div className="form-holder">
-        <form onSubmit={this.createRecipe}>
+      <div id="form-container">
+        <h1>Enter a new recipe:</h1>
+
+        <form onSubmit={this.createRecipe} className="new-recipe">
           <label>
             URL of the recipe to save:
             <input
@@ -86,52 +98,42 @@ export default class FormRecipe extends Component {
               placeholder="http://best-recipe.com"
               onChange={this.updateUrl}
               value={this.props.value}
+              className={this.state.errorUrl ? "error-url" : "ok-url"}
             />
           </label>
 
           <p>Please select your preferred contact method:</p>
           <div id="radio-choices">
-            <input
-              type="radio"
-              id="typeRecipe1"
-              name="typeRecipe"
+            <TypeRecipeInput
               value="starter"
-              onClick={this.handleClickRadio}
-            />
-            <label htmlFor="typeRecipe1">
-              Starter{" "}
+              onChange={this.handleClickRadio}
+              checked={this.state.typeRecipe === "starter"}
+            >
               <span role="img" aria-label="salad">
                 🥗
               </span>
-            </label>
-
-            <input
-              type="radio"
-              id="typeRecipe2"
-              name="typeRecipe"
+              Starter
+            </TypeRecipeInput>
+            <TypeRecipeInput
               value="main"
-              onClick={this.handleClickRadio}
-            />
-            <label htmlFor="typeRecipe2">
-              Main{" "}
+              onChange={this.handleClickRadio}
+              checked={this.state.typeRecipe === "main"}
+            >
               <span role="img" aria-label="spaghetti">
                 🍝
               </span>
-            </label>
-
-            <input
-              type="radio"
-              id="typeRecipe3"
-              name="typeRecipe"
+              Main
+            </TypeRecipeInput>
+            <TypeRecipeInput
+              onChange={this.handleClickRadio}
+              checked={this.state.typeRecipe === "dessert"}
               value="dessert"
-              onClick={this.handleClickRadio}
-            />
-            <label htmlFor="typeRecipe3">
-              Dessert{" "}
+            >
               <span role="img" aria-label="strawberry pudding">
                 🍰
               </span>
-            </label>
+              Dessert
+            </TypeRecipeInput>
           </div>
           <button type="Submit">Add new recipe </button>
         </form>

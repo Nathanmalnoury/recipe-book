@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import RecipeItem from "./RecipeItem";
 import "../CSS/RecipeList.css";
-import { Grid, Box } from "@material-ui/core";
 
 export default class RecipeList extends Component {
   constructor(props, context) {
@@ -21,24 +20,29 @@ export default class RecipeList extends Component {
       .then((result) => {
         this.setState({ recipe: result });
       });
+    console.log(this.state);
   }
 
   renderRecipe(item) {
-    return (
-      <Grid item xs={12} sm={6} md={6} lg={4} key={item._id.$oid}>
-        <RecipeItem item={item} key={item._id.$oid} />
-      </Grid>
-    );
+    return <RecipeItem item={item} key={item._id.$oid} />;
   }
 
   render() {
-    let listRecipe = this.state.recipe.map(this.renderRecipe);
+    console.log(this.state.recipe);
+    let filteredRecipe = this.state.recipe
+      .filter((item) => {
+        if (this.props.filter) {
+          return item.type_recipe === this.props.filter;
+        } else {
+          return true;
+        }
+      })
+      .map(this.renderRecipe);
     return (
-      <Box className="recipe-list">
-        <Grid m={10} container justify="flex-start" spacing={2} margin={15}>
-          {listRecipe}
-        </Grid>
-      </Box>
+      <div id="recipe-list-container">
+        <h1 id="recipe-list-header">{this.props.header}</h1>
+        {filteredRecipe}
+      </div>
     );
   }
 }

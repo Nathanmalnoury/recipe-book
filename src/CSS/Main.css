@@ -1,8 +1,3 @@
-nav {
-  background-color: #e26161;
-  height: 8vh;
-  margin: 15px;
-}
 #header-title {
   font-family: "EB Garamond", serif;
   color: #e26161;
@@ -15,29 +10,47 @@ nav {
   content: "🍜";
   padding-right: 50px;
 }
-.nav-links {
+#main-nav {
+  background-color: #e26161;
+  height: 60px;
+  margin-bottom: 0;
+  margin: 15px;
+  margin-bottom: 0;
+}
+.main-nav-links {
   margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
   width: 100%;
   height: 100%;
+  display: flex;
   /* justify-content: space-around; */
   /* align-items: center; */
 }
 
-.nav-links li {
+.main-nav-links li {
   width: 100%;
   height: 100%;
-  align-items: center;
-  justify-content: space-around;
-  display: flex;
 }
 
-.nav-links li a {
+.main-nav-links li a {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  /* text-align: center; */
   color: ivory;
   text-decoration: none;
   font-size: 22px;
   font-family: "EB Garamond", serif;
   font-weight: lighter;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-nav-links li :hover {
+  display: flex;
+  background-color: #ce5a5a;
+  align-items: center;
+  justify-content: center;
 }
