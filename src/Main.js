@@ -1,15 +1,15 @@
 import React from "react";
 import { Route, NavLink, BrowserRouter } from "react-router-dom";
 import FormRecipe from "./Components/FormRecipe";
-import "./CSS/Main.css";
 import RecipeRouter from "./Components/RecipeRouter";
+import "./CSS/Main.scss";
 
 export default function Main() {
   const activeNavStyle = {
     listStyle: "none",
     display: "flex",
     justifyContent: "center",
-    fontWeight: 500,
+    fontWeight: 600,
     backgroundColor: "rgb(204, 75, 80)",
     height: "100%",
   };
@@ -18,7 +18,7 @@ export default function Main() {
       <h1 id="header-title">Cook Book</h1>
 
       <nav id="main-nav">
-        <ul className="main-nav-links">
+        <ul>
           <li>
             <NavLink
               activeStyle={activeNavStyle}

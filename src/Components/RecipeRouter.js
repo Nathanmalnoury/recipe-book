@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, NavLink, Route, useRouteMatch } from "react-router-dom";
 import RecipeList from "./RecipeList";
-import "../CSS/RecipeRouter.css";
 export default function RecipeRouter() {
   let { path, url } = useRouteMatch();
 
@@ -9,14 +8,14 @@ export default function RecipeRouter() {
     listStyle: "none",
     display: "flex",
     justifyContent: "center",
-    fontWeight: 500,
+    fontWeight: 600,
     backgroundColor: "rgb(223, 103, 108)",
     height: "100%",
   };
   return (
     <BrowserRouter>
       <nav id="subnav">
-        <ul className="nav-links">
+        <ul>
           <li>
             <NavLink
               activeStyle={activeNavStyle}

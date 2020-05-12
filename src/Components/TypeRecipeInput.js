@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../CSS/TypeRecipeInput.css";
+
 export default class TypeRecipeInput extends Component {
   render() {
     return (

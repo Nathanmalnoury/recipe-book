@@ -1,0 +1,46 @@
+@import "Variables";
+@import "RecipeRouter";
+@import "RecipeList";
+@import "RecipeItem";
+@import "FormRecipe";
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto+Mono&display=swap");
+
+#header-title {
+  font-family: $main-font;
+  color: $main-color;
+  font-weight: lighter;
+  font-size: xx-large;
+  text-align: left;
+  &:before {
+    content: "🍜";
+    padding-right: 50px;
+    margin-left: $margin-to-body;
+  }
+}
+
+#main-nav {
+  background-color: $main-color;
+  height: 60px;
+  margin: $margin-to-body;
+  margin-bottom: 0;
+  ul {
+    display: flex;
+    @include full();
+    list-style: none;
+    li {
+      @include full();
+      a {
+        @include flex-center-full();
+        color: white;
+        text-decoration: none;
+        font-size: 22px;
+        font-family: $main-font;
+        font-weight: 500;
+      }
+
+      &:hover {
+        background-color: #ce5a5a;
+      }
+    }
+  }
+}

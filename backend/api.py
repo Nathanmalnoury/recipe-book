@@ -1,6 +1,4 @@
 #! usr/bin/python3
-import logging
-
 from flask import Flask, request
 from flask_cors import CORS
 from mongoengine.errors import NotUniqueError

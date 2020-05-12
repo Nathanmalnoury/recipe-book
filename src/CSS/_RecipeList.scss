@@ -1,0 +1,32 @@
+.error-container {
+  @include flex-center();
+  @include recipe-box(#f89);
+  background-color: #d21818;
+  margin: $margin-to-body;
+  p {
+    color: white;
+    padding: 75px;
+    font-size: xx-large;
+  }
+}
+.loader-container {
+  @include flex-center-full();
+  height: 100%;
+  .loader {
+    @include loader(120px, 16px, 50px);
+  }
+}
+.recipe-list-container {
+  margin: 15px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+}
+
+#recipe-list-header {
+  @include recipe-box();
+  margin-top: 5px;
+  margin-bottom: 10px;
+  grid-column: 1 / -1;
+  padding: 15px;
+}

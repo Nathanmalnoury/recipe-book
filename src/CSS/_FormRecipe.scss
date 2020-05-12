@@ -1,0 +1,118 @@
+$form-text-color: #7c75d0;
+$form-error-color: #dd2525;
+$form-background-color: #f7e2f5;
+
+#container {
+  @include flex-center;
+  margin: $margin-to-body;
+}
+
+#form-container {
+  width: 100%;
+  padding: 25px;
+  @include recipe-box();
+  flex-direction: column;
+  p,
+  div {
+    color: $main-color;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $main-color;
+    margin: 0;
+  }
+  h1 {
+    font-weight: 600;
+  }
+  hr {
+    border: 0;
+    height: 3px;
+    background-color: $main-color;
+    width: 200px;
+    margin-right: auto;
+    margin-left: 0;
+    margin-bottom: 25px;
+  }
+  #error-msg {
+    margin: 5px 0 0 0;
+    color: $form-error-color;
+    &::before {
+      content: "❗ ";
+    }
+  }
+  #url-form-container {
+    width: fit-content;
+
+    .url-recipe {
+      margin-top: 5px;
+      background-color: #ffcace;
+      text-decoration: none;
+      border: none;
+      border-bottom: 3px solid #e48e94;
+      &:focus {
+        background-color: #f4b9e5;
+      }
+    }
+    .url-recipe-error {
+      margin-top: 5px;
+      background-color: inherit;
+      text-decoration: none;
+      border: none;
+      border-bottom: 3px solid $form-error-color;
+    }
+  }
+  #dish-radio-choices {
+    margin-top: 25px;
+    width: fit-content;
+
+    #inputs {
+      #inputs-choices-error {
+        border-bottom: 3px solid $form-error-color;
+      }
+      .label-radio {
+        padding: 5px;
+        font-size: 18px;
+        span {
+          margin-right: 5px;
+        }
+        label {
+          width: 100%;
+        }
+        &:hover {
+          color: #555092;
+        }
+      }
+    }
+  }
+  button {
+    margin: 15px;
+    margin-left: 0;
+    border: 3px solid $main-color;
+    background-color: inherit;
+    color: $main-color;
+    font-size: 20px;
+    padding: 10px;
+
+    &:hover {
+      background-color: #dfcdf4;
+    }
+    .loader-container {
+      width: 100px;
+      .loader {
+        @include loader(10px, 3px, 5px);
+      }
+    }
+  }
+  #success-button {
+    color: #62ae92;
+    border: 3px solid #62ae92;
+  }
+  #error-button {
+    border: 3px solid #dd3131;
+    color: #dd3131;
+  }
+}
