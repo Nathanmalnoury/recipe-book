@@ -39,6 +39,17 @@ def create_recipe():
     return {'success': True, 'id': str(new_id)}
 
 
+@app.route('/recipe/favourite', methods=["POST"])
+def change_favourite():
+    data = request.get_json()
+    id_ = data.get('id')
+    favourite = data.get('favourite')
+    recipe = mongo.get({'id': id_})[0]
+    recipe.favorite = favourite
+    recipe.save()
+    return recipe.to_json()
+
+
 @app.route('/recipe/<id_>', methods=["GET"])
 def get_recipe(id_):
     resp = mongo.get({'id': id_})[0]
@@ -58,4 +69,4 @@ def delete_recipe(id_):
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.0.15', port=5300)
+    app.run(host='10.63.6.239', port=5300)

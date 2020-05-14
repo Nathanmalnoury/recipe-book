@@ -42,7 +42,35 @@ export default class RecipeList extends Component {
   }
 
   renderRecipe(item) {
-    return <RecipeItem item={item} key={item._id.$oid} />;
+    return (
+      <RecipeItem
+        item={item}
+        key={item._id.$oid}
+        handleFavourite={this.handleFavourite.bind(this)}
+      />
+    );
+  }
+
+  handleFavourite(event, item) {
+    event.stopPropagation();
+    const varPost = {
+      method: "POST",
+      cors: "cors",
+      credentials: "same-origin",
+      referrerPolicy: "no-referrer",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: item._id.$oid,
+        favourite: !item.favorite,
+      }),
+    };
+    console.log(varPost);
+    fetch(process.env.REACT_APP_POST_FAVOURITE, varPost).then((resp) => {
+      console.log(resp);
+    });
   }
 
   render() {
@@ -62,7 +90,18 @@ export default class RecipeList extends Component {
       return (
         <div className="recipe-list-container">
           <h1 id="recipe-list-header">{this.props.header}</h1>
-          {this.getRecipe().map(this.renderRecipe)}
+          {this.getRecipe()
+            .map(this.renderRecipe)
+            .sort((a, b) => {
+              console.log(a);
+              if (a.props.item.favorite && !b.props.item.favorite) {
+                return -1;
+              } else if (b.props.item.favorite && !a.props.item.favorite) {
+                return 1;
+              } else {
+                return a.props.item.title > b.props.item.title;
+              }
+            })}
         </div>
       );
     }

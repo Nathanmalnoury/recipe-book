@@ -1,15 +1,18 @@
 import React, { Component } from "react";
-import outlineStar from "../images/star_outline-24px.svg";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
 
 export default class RecipeItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      favourite: false,
     };
     this.openInWindow = this.openInWindow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
     this.getBackupImage = this.getBackupImage.bind(this);
+    this.handleFavourite = this.handleFavourite.bind(this);
   }
 
   openInWindow(e) {
@@ -36,9 +39,16 @@ export default class RecipeItem extends Component {
         return process.env.REACT_APP_MISSING_IMAGE;
     }
   }
+  handleFavourite(e) {
+    this.props.handleFavourite(e, this.props.item);
+    this.setState((prevState) => {
+      return {
+        favourite: !prevState.favourite,
+      };
+    });
+  }
 
   render() {
-    console.log();
     let image_url = this.props.item.image_url
       ? this.props.item.image_url
       : this.getBackupImage();
@@ -50,7 +60,17 @@ export default class RecipeItem extends Component {
             <p className="recipe-title">{this.props.item.title}</p>
           </div>
           <div className="img-container">
-            <img src={outlineStar}></img>
+            {this.props.item.favorite || this.state.favourite ? (
+              <StarIcon
+                style={{ fontSize: 30 }}
+                onClick={(e) => this.handleFavourite(e, this.props.item)}
+              />
+            ) : (
+              <StarBorderIcon
+                style={{ fontSize: 30 }}
+                onClick={(e) => this.handleFavourite(e, this.props.item)}
+              />
+            )}
           </div>
         </div>
       </div>
