@@ -69,4 +69,4 @@ def delete_recipe(id_):
 
 
 if __name__ == "__main__":
-    app.run(host='10.63.6.239', port=5300)
+    app.run(host='localhost', port=5300)
