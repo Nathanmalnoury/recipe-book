@@ -16,11 +16,25 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   python3.8 -m pip install -r requirements.txt
   ```
 
-- In case of usage with Apache2:
-  - Requires apache2:
-  ```shell
-  sudo apt-get install libapache2-mod-wsgi-py3
-  ```
+## Apache2 :
+
+### Mods:
+
+Install WSGI for apache2:
+
+```shell
+sudo apt-get install libapache2-mod-wsgi-py3
+```
+
+Make sure the `.env` file points to the right URL.
+
+Enable WSGI and Rewrite modules.
+
+An example of my `apache2.conf` is available on this repository, located in `apache2-example.conf`. Please keep in mind that :
+
+- It uses a VirtualHost, not shown in this file,
+- It uses Apache 2.4.41,
+- It has been tested on Ubuntu 20.04 LTS
 
 ## **Warning:**
 
