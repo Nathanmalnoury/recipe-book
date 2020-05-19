@@ -1,5 +1,24 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+##
+
+## Back-End:
+
+- Required dependencies:
+
+  - MongoDB Community Edition : v3.6.8
+  - Python 3.8
+
+- Required Python libraries:
+  - Contained in the requirements.txt file. Installation can be both system-wide or inside a virtual-env.
+    To install automatically:
+  ```bash
+  python3.8 -m pip install -r requirements.txt
+  ```
+
+**Warning:**
+Make sure that the `.env` file points to the right api url.
+
 ## Available Scripts
 
 In the project directory, you can run:
