@@ -1,0 +1,21 @@
+.recipe-pic-grid {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  grid-auto-rows: 350px;
+  grid-auto-flow: dense;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  @media screen and (min-width: 550px) {
+    img:nth-child(12n + 1) {
+      grid-column: span 2;
+    }
+  }
+}

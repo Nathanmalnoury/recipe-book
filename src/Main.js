@@ -3,6 +3,7 @@ import { Route, NavLink, BrowserRouter } from "react-router-dom";
 import FormRecipe from "./Components/FormRecipe";
 import RecipeRouter from "./Components/RecipeRouter";
 import "./CSS/Main.scss";
+import GridImage from "./Components/GridImage";
 
 export default function Main() {
   const activeNavStyle = {
@@ -43,6 +44,9 @@ export default function Main() {
           <RecipeRouter />
         </Route>
         <Route path="/new" component={FormRecipe} />
+        <Route exact path="/">
+          <GridImage />
+        </Route>
       </div>
     </BrowserRouter>
   );

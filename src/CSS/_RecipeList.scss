@@ -1,6 +1,7 @@
 .error-container {
   @include flex-center();
   @include recipe-box(#f89);
+  margin-top: 10px;
   background-color: #d21818;
   p {
     color: white;
