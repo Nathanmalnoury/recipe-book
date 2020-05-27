@@ -4,7 +4,7 @@ $form-background-color: #f7e2f5;
 
 #container {
   @include flex-center;
-  margin: $margin-to-body;
+  margin-top: 15px;
 }
 
 #form-container {
@@ -54,7 +54,7 @@ $form-background-color: #f7e2f5;
       border: none;
       border-bottom: 3px solid #e48e94;
       &:focus {
-        background-color: #f4b9e5;
+        background-color: #eabdde;
       }
     }
     .url-recipe-error {
