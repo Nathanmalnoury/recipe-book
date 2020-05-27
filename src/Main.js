@@ -16,7 +16,9 @@ export default function Main() {
   };
   return (
     <BrowserRouter>
-      <h1 id="header-title">Cook Book</h1>
+      <a href="/" id="title-link">
+        <h1 id="header-title">Cook Book</h1>
+      </a>
 
       <nav id="main-nav">
         <ul>
