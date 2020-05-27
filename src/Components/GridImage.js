@@ -19,10 +19,11 @@ export default class GridImage extends Component {
         this.setState({
           images: result
             .map((recipe) => {
-              return recipe.image_url;
+              console.log(recipe);
+              return { id: recipe._id.$oid, image: recipe.image_url };
             })
-            .filter((url) => {
-              return url !== undefined;
+            .filter((recipe) => {
+              return recipe.image !== undefined;
             }),
         });
       })
@@ -33,6 +34,14 @@ export default class GridImage extends Component {
       .finally(() => {
         this.setState({ loading: false });
       });
+  }
+  openRecipe(e, id) {
+    e.stopPropagation();
+    // ! use Create Portal and make a modal out of it.
+    // ! replicate from RecipeItem
+
+    let win = window.open(process.env.REACT_APP_API_URL + `/recipe/${id}/view`);
+    win.focus();
   }
   render() {
     console.log(this.state);
@@ -52,8 +61,15 @@ export default class GridImage extends Component {
     } else if (this.state.images.length === 0) {
       return <>Empty</>;
     } else {
-      const imgTiles = this.state.images.map((url) => {
-        return <img src={url} key={url} alt=""></img>;
+      const imgTiles = this.state.images.map((recipe) => {
+        return (
+          <img
+            src={recipe.image}
+            key={recipe.image}
+            alt=""
+            onClick={(e) => this.openRecipe(e, recipe.id)}
+          ></img>
+        );
       });
       return <div className="recipe-pic-grid">{imgTiles}</div>;
     }
