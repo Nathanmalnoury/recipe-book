@@ -1,4 +1,4 @@
-#! usr/bin/python3
+#! usr/bin/python3.7
 from flask import Flask, request
 from flask_cors import CORS
 from mongoengine.errors import NotUniqueError
