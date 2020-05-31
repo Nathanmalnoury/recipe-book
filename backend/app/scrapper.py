@@ -7,9 +7,10 @@ Tested and working with:
 - BBC Good Food
 
 """
+from io import BytesIO
 from urllib.parse import urljoin
-import requests
 
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -58,11 +59,16 @@ class Scrapper():
 
         try:
             image_url = self.find_image_src(title)
+            image_type = self.get_image_type(image_url)
+            image = BytesIO(requests.get(image_url).content)
         except Exception:
-            image_url = None
+            print("No image")
+            image = None
+            image_type = None
 
         recipe_dict = {
-            "image_url": image_url,
+            "image_type": image_type,
+            "image": image,
             "title": title,
             "content": str(self.soup),
             "type_recipe": self.type_recipe,
@@ -96,6 +102,19 @@ class Scrapper():
 
         print('Could not find the image')
         return None
+
+    def get_image_type(self, image_url):
+        ext_to_type = {
+            "JPG": 'image/jpeg',
+            "JPEG": 'image/jpeg',
+            "PNG": 'image/png',
+            "GIF": "image/gif",
+            "SVG": "image/svg",
+            "BMP": "image/bmp",
+        }
+        extension = image_url.split(".")[-1].upper()
+        print(extension, ext_to_type.get(extension))
+        return ext_to_type.get(extension)
 
     @staticmethod
     def fix_src_urls(soup, url):

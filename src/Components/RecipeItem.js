@@ -11,7 +11,6 @@ export default class RecipeItem extends Component {
     };
     this.openInWindow = this.openInWindow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
-    this.getBackupImage = this.getBackupImage.bind(this);
     this.handleFavourite = this.handleFavourite.bind(this);
   }
 
@@ -20,23 +19,53 @@ export default class RecipeItem extends Component {
     console.log(this.props.item._id);
     // ! use Create Portal and make a modal out of it.
     let win = window.open(
-      process.env.REACT_APP_API_URL + `/recipe/${this.props.item._id.$oid}/view`
+      process.env.REACT_APP_API_URL + `/recipe/${this.props.item.id}/view`
     );
     win.focus();
   }
   createMarkup() {
     return { __html: this.props.item.content };
   }
-  getBackupImage() {
-    switch (this.props.item.type_recipe) {
-      case "starter":
-        return process.env.REACT_APP_MISSING_IMG_STARTER;
-      case "main":
-        return process.env.REACT_APP_MISSING_IMG_MAIN;
-      case "dessert":
-        return process.env.REACT_APP_MISSING_IMG_DESSERT;
-      default:
-        return process.env.REACT_APP_MISSING_IMAGE;
+
+  getImageTag(image, alt) {
+    if (image) {
+      return (
+        <img
+          src={`data:${this.props.item.image["content-type"]};base64,${this.props.item.image.content}`}
+          alt={this.props.item.title}
+        />
+      );
+    } else {
+      switch (this.props.item.type_recipe) {
+        case "starter":
+          return (
+            <img
+              src={process.env.PUBLIC_URL + "/img/starter.jpg"}
+              alt={alt}
+            ></img>
+          );
+        case "main":
+          return (
+            <img
+              src={process.env.PUBLIC_URL + "/img/main.jpeg"}
+              alt={alt}
+            ></img>
+          );
+        case "dessert":
+          return (
+            <img
+              src={process.env.PUBLIC_URL + "/img/dessert.jpg"}
+              alt={alt}
+            ></img>
+          );
+        default:
+          return (
+            <img
+              src={process.env.PUBLIC_URL + "/img/default.jpg"}
+              alt={alt}
+            ></img>
+          );
+      }
     }
   }
   handleFavourite(e) {
@@ -49,12 +78,10 @@ export default class RecipeItem extends Component {
   }
 
   render() {
-    let image_url = this.props.item.image_url
-      ? this.props.item.image_url
-      : this.getBackupImage();
+    let imageTag = this.getImageTag(this.props.item.image, this.props.title);
     return (
       <div className="recipe-flex" onClick={this.openInWindow}>
-        <img src={image_url} alt={this.props.item.title} />
+        {imageTag}
         <div id="flex-col-title">
           <div id="no-overflow">
             <p className="recipe-title">{this.props.item.title}</p>

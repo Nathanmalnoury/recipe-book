@@ -45,7 +45,7 @@ export default class RecipeList extends Component {
     return (
       <RecipeItem
         item={item}
-        key={item._id.$oid}
+        key={item.id}
         handleFavourite={this.handleFavourite.bind(this)}
       />
     );
@@ -63,11 +63,10 @@ export default class RecipeList extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: item._id.$oid,
+        id: item.id,
         favourite: !item.favorite,
       }),
     };
-    console.log(varPost);
     fetch(process.env.REACT_APP_POST_FAVOURITE, varPost).then((resp) => {
       console.log(resp);
     });
@@ -93,7 +92,6 @@ export default class RecipeList extends Component {
           {this.getRecipe()
             .map(this.renderRecipe)
             .sort((a, b) => {
-              console.log(a);
               if (a.props.item.favorite && !b.props.item.favorite) {
                 return -1;
               } else if (b.props.item.favorite && !a.props.item.favorite) {

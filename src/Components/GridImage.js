@@ -19,8 +19,7 @@ export default class GridImage extends Component {
         this.setState({
           images: result
             .map((recipe) => {
-              console.log(recipe);
-              return { id: recipe._id.$oid, image: recipe.image_url };
+              return { id: recipe.id, image: recipe.image };
             })
             .filter((recipe) => {
               return recipe.image !== undefined;
@@ -28,7 +27,6 @@ export default class GridImage extends Component {
         });
       })
       .catch((error) => {
-        console.log("Error occured", error);
         this.setState({ error: true });
       })
       .finally(() => {
@@ -44,8 +42,6 @@ export default class GridImage extends Component {
     win.focus();
   }
   render() {
-    console.log(this.state);
-
     if (this.state.loading === true) {
       return (
         <div className="loader-container">
@@ -55,7 +51,7 @@ export default class GridImage extends Component {
     } else if (this.state.error === true) {
       return (
         <div className="error-container">
-          <p>An error occured while calling the API.</p>
+          <p>An error occurred while calling the API.</p>
         </div>
       );
     } else if (this.state.images.length === 0) {
@@ -64,8 +60,8 @@ export default class GridImage extends Component {
       const imgTiles = this.state.images.map((recipe) => {
         return (
           <img
-            src={recipe.image}
-            key={recipe.image}
+            src={`data:${recipe.image["content-type"]};base64,${recipe.image.content}`}
+            key={recipe.id}
             alt=""
             onClick={(e) => this.openRecipe(e, recipe.id)}
           ></img>

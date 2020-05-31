@@ -3,7 +3,6 @@
 #subnav {
   background-color: #e78b8b;
   height: 40px;
-  margin: 15px;
   margin-top: 0;
   border-top: 1px solid #fdf6f2;
 }
@@ -69,8 +68,8 @@
   color: #e26161;
   font-family: "EB Garamond", serif;
   font-weight: 500;
+  margin-top: 10px;
   background-color: #d21818;
-  margin: 15px;
 }
 
 .error-container p {
@@ -132,7 +131,7 @@
 }
 
 .recipe-list-container {
-  margin: 15px;
+  margin-top: 10px;
   display: -ms-grid;
   display: grid;
   gap: 1rem;
@@ -245,7 +244,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 15px;
+  margin-top: 15px;
 }
 
 #form-container {
@@ -316,7 +315,7 @@
 }
 
 #form-container #url-form-container .url-recipe:focus {
-  background-color: #f4b9e5;
+  background-color: #eabdde;
 }
 
 #form-container #url-form-container .url-recipe-error {
@@ -407,6 +406,33 @@
   color: #dd3131;
 }
 
+.recipe-pic-grid {
+  margin-top: 15px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(250px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  grid-auto-rows: 350px;
+  grid-auto-flow: dense;
+}
+
+.recipe-pic-grid img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 550px) {
+  .recipe-pic-grid img:nth-child(12n + 1) {
+    grid-column: span 2;
+  }
+}
+
 #header-title {
   font-family: "EB Garamond", serif;
   color: #e26161;
@@ -469,5 +495,14 @@
 
 #main-nav ul li:hover {
   background-color: #ce5a5a;
+}
+
+#content {
+  margin: 15px;
+  margin-top: 0;
+}
+
+#title-link {
+  text-decoration: none;
 }
 /*# sourceMappingURL=Main.css.map */

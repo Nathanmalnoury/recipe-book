@@ -1,4 +1,4 @@
-#! usr/bin/python3.7
+#! usr/bin/python3.8
 from flask import Flask, request
 from flask_cors import CORS
 from mongoengine.errors import NotUniqueError
@@ -32,6 +32,8 @@ def create_recipe():
 
     if url is None:
         return {'success': False, 'message': 'URL empty', "id": None}
+
+    
 
     new_id = mongo.add_recipe(
         Scrapper(url=url, type_recipe=type_recipe).scrap()
@@ -69,4 +71,4 @@ def delete_recipe(id_):
 
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=5300)
+    app.run(host='0.0.0.0', port=5300)

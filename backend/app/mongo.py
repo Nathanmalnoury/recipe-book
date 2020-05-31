@@ -1,3 +1,5 @@
+import json
+import base64
 from mongoengine import connect
 
 from models.recipe import Recipe
@@ -8,7 +10,23 @@ class MongoClient:
         self.client = connect('recipe')
 
     def get_all_recipes(self):
-        return Recipe.objects().exclude('content').to_json()
+        response = []
+        for rec in Recipe.objects():
+            info = {
+                "id": str(rec.id),
+                "title": rec.title,
+                "type_recipe": rec.type_recipe,
+                "favorite": rec.favorite,
+            }
+            if rec.image:
+                info["image"] = {
+                    "content": base64.b64encode(rec.image.read()).decode("utf-8"),
+                    "content-type": rec.image.content_type
+                }
+            response.append(info)
+        print(response)
+
+        return json.dumps(response)
 
     def add_recipe(self, recipe):
         """Add a recipe to mongoDB
@@ -20,7 +38,12 @@ class MongoClient:
         Returns:
             str -- id of the newly created entry
         """
+        type_image = recipe.pop("image_type")
+        image = recipe.pop("image")
+
         new_recipe = Recipe(**recipe)
+        if image is not None:
+            new_recipe.image.put(image, content_type=type_image)
         recipe_object = new_recipe.save()
         return recipe_object.id
 
