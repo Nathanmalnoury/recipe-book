@@ -14,10 +14,10 @@ export default class ButtonSubmit extends PureComponent {
     } else {
       if (this.props.showSuccess) {
         idButton = "success-button";
-        message = "Success!";
+        message = this.props.message ? this.props.message : "Success!";
       } else {
         idButton = "error-button";
-        message = "API Error";
+        message = this.props.message ? this.props.message : "API Error";
       }
     }
 

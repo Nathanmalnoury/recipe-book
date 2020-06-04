@@ -69,14 +69,21 @@ export default class FormRecipe extends Component {
         })
         .then((response) => {
           console.log(response);
-          if (response)
+          if (response && response.code === 200)
             this.setState({
               ...this.initialState,
               recipeAdded: true,
+              message: "Recipe added 🍠",
             });
+          else {
+            this.setState({
+              ...this.initialState,
+              recipeAdded: false,
+              message: response.message,
+            });
+          }
         })
         .catch(() => {
-          console.log("catch");
           this.setState({
             recipeAdded: false,
           });
@@ -159,6 +166,7 @@ export default class FormRecipe extends Component {
               onClick={this.createRecipe}
               showLoading={this.state.addingRecipe}
               showSuccess={this.state.recipeAdded}
+              message={this.state.message}
             />
           </form>
         </div>

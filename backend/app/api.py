@@ -22,18 +22,16 @@ def all_recipe():
 
 
 @app.route('/create/recipe/', methods=['POST'])
-@app.errorhandler(NotUniqueError)
 def create_recipe():
     json_data = request.get_json()
     url = json_data.get('url')
     type_recipe = json_data.get('typeRecipe')
     print(f'Creating entry \'{type_recipe}\' for url: \'{url}\'')
-    # TODO : data validation
 
+    if type_recipe is None:
+        raise ValueError("typeRecipe is empty")
     if url is None:
-        return {'success': False, 'message': 'URL empty', "id": None}
-
-    
+        raise ValueError("URL is empty")
 
     new_id = mongo.add_recipe(
         Scrapper(url=url, type_recipe=type_recipe).scrap()
@@ -68,6 +66,16 @@ def view_recipe(id_):
 def delete_recipe(id_):
     mongo.delete_one(id_)
     return {'success': True}
+
+
+@app.errorhandler(ValueError)
+def value_error(error: ValueError):
+    return {"message": error.__str__()}, 400
+
+
+@app.errorhandler(NotUniqueError)
+def not_unique(error):
+    return {"message": "This recipe is already stored"}, 400
 
 
 if __name__ == "__main__":
