@@ -65,22 +65,21 @@ export default class FormRecipe extends Component {
       this.setState({ addingRecipe: true });
       fetch(process.env.REACT_APP_CREATE_NEW, this.getPostVariables())
         .then((response) => {
+          let newState;
+          if (response.ok) {
+            newState = {
+              recipeAdded: true,
+              message: "Recipe added !",
+            };
+          } else {
+            newState = { recipeAdded: false, message: "API Error" };
+          }
+          this.setState({ ...this.initialState, ...newState });
           return response.json();
         })
         .then((response) => {
-          console.log(response);
-          if (response && response.code === 200)
-            this.setState({
-              ...this.initialState,
-              recipeAdded: true,
-              message: "Recipe added 🍠",
-            });
-          else {
-            this.setState({
-              ...this.initialState,
-              recipeAdded: false,
-              message: response.message,
-            });
+          if (response.message) {
+            this.setState({ message: response.message });
           }
         })
         .catch(() => {

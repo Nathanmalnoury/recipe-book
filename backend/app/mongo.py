@@ -24,8 +24,6 @@ class MongoClient:
                     "content-type": rec.image.content_type
                 }
             response.append(info)
-        print(response)
-
         return json.dumps(response)
 
     def add_recipe(self, recipe):
