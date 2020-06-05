@@ -6,19 +6,29 @@
 @import "GridImages";
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto+Mono&display=swap");
 
-#header-title {
-  font-family: $main-font;
-  color: $main-color;
-  font-weight: lighter;
-  font-size: xx-large;
-  text-align: left;
-  &:before {
-    content: "🍜";
-    padding-right: 50px;
-    margin-left: $margin-to-body;
+#header-container {
+  display: grid;
+  grid-template-columns: auto 25px;
+  margin: 0 $margin-to-body 0 $margin-to-body;
+  #header-title {
+    font-family: $main-font;
+    color: $main-color;
+    font-weight: lighter;
+    font-size: xx-large;
+    text-align: left;
+    &:before {
+      content: "🍜";
+      padding-right: 50px;
+    }
+  }
+  #icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
   }
 }
-
 #main-nav {
   background-color: $main-color;
   height: 60px;

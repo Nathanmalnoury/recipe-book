@@ -3,7 +3,9 @@ import { Route, NavLink, BrowserRouter } from "react-router-dom";
 import FormRecipe from "./Components/FormRecipe";
 import RecipeRouter from "./Components/RecipeRouter";
 import "./CSS/Main.scss";
+
 import GridImage from "./Components/GridImage";
+import { Settings } from "@material-ui/icons";
 
 export default function Main() {
   const activeNavStyle = {
@@ -16,9 +18,16 @@ export default function Main() {
   };
   return (
     <BrowserRouter>
-      <a href="/" id="title-link">
-        <h1 id="header-title">Cook Book</h1>
-      </a>
+      <div id="header-container">
+        <a href="/" id="title-link">
+          <h1 id="header-title">Cook Book</h1>
+        </a>
+        <div id="icon-container">
+          <a href="/edit">
+            <Settings style={{ fill: "rgb(226, 97, 97)" }} />
+          </a>
+        </div>
+      </div>
 
       <nav id="main-nav">
         <ul>
