@@ -11,11 +11,6 @@ CORS(app, resources={r"*": {"origins": "*"}})
 mongo = MongoClient()
 
 
-@app.route('/')
-def hello_world():
-    return {'msg': 'Hello, World!'}
-
-
 @app.route('/recipe/all')
 def all_recipe():
     return mongo.get_all_recipes()
