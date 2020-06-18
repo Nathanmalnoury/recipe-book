@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import RecipeItem from "./RecipeItem";
+import LoaderContainer from "./LoaderContainer";
+import ErrorContainer from "./ErrorContainer";
 
 export default class RecipeList extends Component {
   constructor(props, context) {
@@ -74,16 +76,10 @@ export default class RecipeList extends Component {
 
   render() {
     if (this.state.loading) {
-      return (
-        <div className="loader-container">
-          <div className="loader"></div>
-        </div>
-      );
+      return <LoaderContainer />;
     } else if (this.state.error) {
       return (
-        <div className="error-container">
-          <p>An error occured while calling the API.</p>
-        </div>
+        <ErrorContainer message="An error occured while calling the API." />
       );
     } else {
       return (

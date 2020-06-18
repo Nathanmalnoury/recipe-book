@@ -47,16 +47,10 @@ export default class GridImage extends Component {
       return <LoaderContainer />;
     } else if (this.state.error === true) {
       return (
-        <div className="error-container">
-          <p>An error occurred while calling the API.</p>
-        </div>
+        <ErrorContainer message="An error occurred while calling the API." />
       );
     } else if (this.state.images.length === 0) {
-      return (
-        <div className="error-container">
-          <p>Please add a first recipe !</p>
-        </div>
-      );
+      return <ErrorContainer message="Please add the first recipe!" />;
     } else {
       const imgTiles = this.state.images.map((recipe) => {
         return (
