@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LoaderContainer from "./LoaderContainer";
 
 export default class GridImage extends Component {
   constructor(props, context) {
@@ -43,11 +44,7 @@ export default class GridImage extends Component {
   }
   render() {
     if (this.state.loading === true) {
-      return (
-        <div className="loader-container">
-          <div className="loader"></div>
-        </div>
-      );
+      return <LoaderContainer />;
     } else if (this.state.error === true) {
       return (
         <div className="error-container">
@@ -55,7 +52,11 @@ export default class GridImage extends Component {
         </div>
       );
     } else if (this.state.images.length === 0) {
-      return <>Empty</>;
+      return (
+        <div className="error-container">
+          <p>Please add a first recipe !</p>
+        </div>
+      );
     } else {
       const imgTiles = this.state.images.map((recipe) => {
         return (

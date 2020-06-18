@@ -4,4 +4,9 @@ import Main from "./Main";
 
 const mountNode = document.querySelector("#root");
 
-ReactDOM.render(<Main />, mountNode);
+ReactDOM.render(
+  <React.StrictMode>
+    <Main />
+  </React.StrictMode>,
+  mountNode
+);

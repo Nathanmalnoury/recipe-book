@@ -1,19 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class TypeRecipeInput extends Component {
-  render() {
-    return (
-      <div className="label-radio">
-        <label>
-          <input
-            type="radio"
-            value={this.props.value}
-            onChange={this.props.onChange}
-            checked={this.props.checked}
-          />
-          {this.props.children}
-        </label>
-      </div>
-    );
-  }
-}
+const TypeRecipeInput = (props) => {
+  const { value, onChange, checked, children } = props;
+  return (
+    <div className="label-radio">
+      <label>
+        <input
+          type="radio"
+          value={value}
+          onChange={onChange}
+          checked={checked}
+        />
+        {children}
+      </label>
+    </div>
+  );
+};
+
+export default TypeRecipeInput;
