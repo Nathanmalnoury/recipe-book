@@ -2,7 +2,7 @@ import React from "react";
 import RecipeItem from "./RecipeItem";
 import LoaderContainer from "./LoaderContainer";
 import ErrorContainer from "./ErrorContainer";
-import useFetch from "./hooks/useFetch";
+import useFetch from "../Hooks/useFetch";
 import { getPostVar, recipeSorter } from "../utils";
 
 const urlPostRecipe = process.env.REACT_APP_POST_FAVOURITE;

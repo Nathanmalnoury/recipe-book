@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import TypeRecipeInput from "./TypeRecipeInput";
 import ButtonSubmit from "./ButtonSubmit";
+import { getPostVar } from "../utils";
+import { ApiContext } from "../Context/ApiContext";
 
 export default class FormRecipe extends Component {
   initialState = {
@@ -42,28 +44,14 @@ export default class FormRecipe extends Component {
     return isOK;
   }
 
-  getPostVariables() {
-    return {
-      method: "POST",
-      cors: "cors",
-      credentials: "same-origin",
-      referrerPolicy: "no-referrer",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        url: this.state.url,
-        typeRecipe: this.state.typeRecipe,
-      }),
-    };
-  }
-
   createRecipe(event) {
     event.preventDefault();
     if (this.validateForm()) {
       this.setState({ addingRecipe: true });
-      fetch(process.env.REACT_APP_CREATE_NEW, this.getPostVariables())
+      fetch(
+        process.env.REACT_APP_CREATE_NEW,
+        getPostVar({ url: this.state.url, typeRecipe: this.state.typeRecipe })
+      )
         .then((response) => {
           let newState;
           if (response.ok) {
@@ -71,8 +59,10 @@ export default class FormRecipe extends Component {
               recipeAdded: true,
               message: "Recipe added !",
             };
+            ApiContext.shouldUpdate = true;
           } else {
             newState = { recipeAdded: false, message: "API Error" };
+            console.log(response);
           }
           this.setState({ ...this.initialState, ...newState });
           return response.json();
@@ -108,7 +98,7 @@ export default class FormRecipe extends Component {
               <input
                 type="text"
                 className={`url-recipe${this.state.errorUrl ? "-error" : ""}`}
-                placeholder="http://best-recipe.com "
+                placeholder="http://best-recipe.com"
                 onChange={this.updateUrl}
                 value={this.state.url}
               />

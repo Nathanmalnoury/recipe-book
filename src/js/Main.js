@@ -6,7 +6,7 @@ import ListEditRecipe from "./Components/ListEditRecipe";
 import MainNav from "./Components/MainNav";
 import Header from "./Components/Header";
 import GridImage from "./Components/GridImage";
-import "./CSS/Main.scss";
+import "../CSS/Main.scss";
 
 const Main = () => {
   return (
@@ -14,14 +14,16 @@ const Main = () => {
       <Header />
       <MainNav />
       <div id="content">
-        <Route path="/recipe">
-          <RecipeRouter />
-        </Route>
-        <Route path="/new" component={FormRecipe} />
         <Route exact path="/">
           <GridImage />
         </Route>
-        <Route path="/edit">
+        <Route exact path="/recipe">
+          <RecipeRouter />
+        </Route>
+        <Route exact path="/new">
+          <FormRecipe />
+        </Route>
+        <Route exact path="/edit">
           <ListEditRecipe />
         </Route>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import LoaderContainer from "./LoaderContainer";
-import useFetch from "./hooks/useFetch";
+import useFetch from "../Hooks/useFetch";
 import ErrorContainer from "./ErrorContainer";
 import GridTile from "./GridTile";
 
@@ -23,8 +23,8 @@ const GridImage = () => {
       .filter((recipe) => recipe.image !== undefined)
       .map((recipe) => (
         <GridTile
+          key={recipe.id}
           image={recipe.image}
-          id={recipe.id}
           handleClick={openRecipe}
         />
       ));
