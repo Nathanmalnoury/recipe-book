@@ -20,13 +20,11 @@ const useFetch = () => {
       savedData.shouldUpdate = false;
     }
     if (savedData.shouldUpdate) {
-      console.log("updating context.");
       fetchData();
       return () => {
         abortController.abort();
       };
     } else {
-      console.log("using context to populate state.");
       setData(savedData.data);
       setLoading(false);
     }

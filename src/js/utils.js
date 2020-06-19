@@ -22,4 +22,12 @@ const recipeSorter = (a, b) => {
   }
 };
 
-export { getPostVar, recipeSorter };
+const apiUrl = process.env.REACT_APP_API_URL;
+
+const openRecipeInBrowser = (e, recipeId) => {
+  e.stopPropagation();
+  let win = window.open(`${apiUrl}/recipe/${recipeId}/view`);
+  win.focus();
+};
+
+export { getPostVar, recipeSorter, openRecipeInBrowser };

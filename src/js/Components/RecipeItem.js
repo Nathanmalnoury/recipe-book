@@ -2,19 +2,12 @@ import React, { useState, useContext } from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 import { ApiContext } from "../Context/ApiContext";
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import { openRecipeInBrowser } from "../utils";
 const publicImageUrl = process.env.PUBLIC_URL + "/img";
 
 const RecipeItem = (props) => {
   const [favourite, setFavourite] = useState(false);
   const dataSaved = useContext(ApiContext);
-  const openInWindow = (e) => {
-    e.stopPropagation();
-    // ! use Create Portal and make a modal out of it.
-    let win = window.open(`${apiUrl}/recipe/${props.item.id}/view`);
-    win.focus();
-  };
   const getImageTag = () => {
     const defaultTag = (filename) => (
       <img src={`${publicImageUrl}/${filename}`} alt={filename}></img>
@@ -46,7 +39,10 @@ const RecipeItem = (props) => {
   };
 
   return (
-    <div className="recipe-flex" onClick={openInWindow}>
+    <div
+      className="recipe-flex"
+      onClick={(e) => openRecipeInBrowser(e, props.id)}
+    >
       {getImageTag()}
       <div id="flex-col-title">
         <div id="no-overflow">
@@ -68,11 +64,3 @@ const RecipeItem = (props) => {
 };
 
 export default RecipeItem;
-
-//   render() {
-//     let imageTag = this.getImageTag(this.props.item.image, this.props.title);
-//     return (
-//
-//     );
-//   }
-// }
