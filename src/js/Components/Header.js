@@ -5,16 +5,16 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <div id="header-container">
-      <NavLink to="/">
-        <div id="title-link">
+      <div id="title-link">
+        <NavLink to="/" activeStyle={{ textDecoration: "none" }}>
           <h1 id="header-title">Cook Book</h1>
-        </div>
-      </NavLink>
-      <NavLink to="/edit">
-        <div id="icon-container">
+        </NavLink>
+      </div>
+      <div id="icon-container">
+        <NavLink to="/edit" activeStyle={{ textDecoration: "none" }}>
           <Settings style={{ fill: "rgb(226, 97, 97)" }} />
-        </div>
-      </NavLink>
+        </NavLink>
+      </div>
     </div>
   );
 };
