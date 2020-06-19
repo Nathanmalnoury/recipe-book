@@ -1,106 +1,78 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
+import { ApiContext } from "../Context/ApiContext";
 
-export default class RecipeItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      favourite: false,
-    };
-    this.openInWindow = this.openInWindow.bind(this);
-    this.createMarkup = this.createMarkup.bind(this);
-    this.handleFavourite = this.handleFavourite.bind(this);
-  }
+const apiUrl = process.env.REACT_APP_API_URL;
+const publicImageUrl = process.env.PUBLIC_URL + "/img";
 
-  openInWindow(e) {
+const RecipeItem = (props) => {
+  const [favourite, setFavourite] = useState(false);
+  const dataSaved = useContext(ApiContext);
+  const openInWindow = (e) => {
     e.stopPropagation();
-    console.log(this.props.item._id);
     // ! use Create Portal and make a modal out of it.
-    let win = window.open(
-      process.env.REACT_APP_API_URL + `/recipe/${this.props.item.id}/view`
-    );
+    let win = window.open(`${apiUrl}/recipe/${props.item.id}/view`);
     win.focus();
-  }
-  createMarkup() {
-    return { __html: this.props.item.content };
-  }
-
-  getImageTag(image, alt) {
-    if (image) {
+  };
+  const getImageTag = () => {
+    const defaultTag = (filename) => (
+      <img src={`${publicImageUrl}/${filename}`} alt={filename}></img>
+    );
+    if (props.item.image) {
       return (
         <img
-          src={`data:${this.props.item.image["content-type"]};base64,${this.props.item.image.content}`}
-          alt={this.props.item.title}
+          src={`data:${props.item.image["content-type"]};base64,${props.item.image.content}`}
+          alt={props.item.title}
         />
       );
     } else {
-      switch (this.props.item.type_recipe) {
+      switch (props.item.type_recipe) {
         case "starter":
-          return (
-            <img
-              src={process.env.PUBLIC_URL + "/img/starter.jpg"}
-              alt={alt}
-            ></img>
-          );
+          return defaultTag("starter.jpg");
         case "main":
-          return (
-            <img
-              src={process.env.PUBLIC_URL + "/img/main.jpeg"}
-              alt={alt}
-            ></img>
-          );
+          return defaultTag("main.jpeg");
         case "dessert":
-          return (
-            <img
-              src={process.env.PUBLIC_URL + "/img/dessert.jpg"}
-              alt={alt}
-            ></img>
-          );
+          return defaultTag("dessert.jpg");
         default:
-          return (
-            <img
-              src={process.env.PUBLIC_URL + "/img/default.jpg"}
-              alt={alt}
-            ></img>
-          );
+          return defaultTag("default.jpg");
       }
     }
-  }
-  handleFavourite(e) {
-    this.props.handleFavourite(e, this.props.item);
-    this.setState((prevState) => {
-      return {
-        favourite: !prevState.favourite,
-      };
-    });
-  }
+  };
+  const handleFavourite = (e) => {
+    props.handleFavourite(e, props.item);
+    setFavourite(!favourite);
+    dataSaved.shouldUpdate = true;
+  };
 
-  render() {
-    let imageTag = this.getImageTag(this.props.item.image, this.props.title);
-    return (
-      <div className="recipe-flex" onClick={this.openInWindow}>
-        {imageTag}
-        <div id="flex-col-title">
-          <div id="no-overflow">
-            <p className="recipe-title">{this.props.item.title}</p>
-          </div>
-          <div className="img-container">
-            {this.props.item.favorite || this.state.favourite ? (
-              <StarIcon
-                style={{ fontSize: 30 }}
-                onClick={(e) => this.handleFavourite(e, this.props.item)}
-              />
-            ) : (
-              <StarBorderIcon
-                style={{ fontSize: 30 }}
-                onClick={(e) => this.handleFavourite(e, this.props.item)}
-              />
-            )}
-          </div>
+  return (
+    <div className="recipe-flex" onClick={openInWindow}>
+      {getImageTag()}
+      <div id="flex-col-title">
+        <div id="no-overflow">
+          <p className="recipe-title">{props.item.title}</p>
+        </div>
+        <div className="img-container">
+          {props.item.favorite || favourite ? (
+            <StarIcon style={{ fontSize: 30 }} onClick={handleFavourite} />
+          ) : (
+            <StarBorderIcon
+              style={{ fontSize: 30 }}
+              onClick={handleFavourite}
+            />
+          )}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default RecipeItem;
+
+//   render() {
+//     let imageTag = this.getImageTag(this.props.item.image, this.props.title);
+//     return (
+//
+//     );
+//   }
+// }
