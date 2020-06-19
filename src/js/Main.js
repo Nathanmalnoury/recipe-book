@@ -17,13 +17,13 @@ const Main = () => {
         <Route exact path="/">
           <GridImage />
         </Route>
-        <Route exact path="/recipe">
+        <Route path="/recipe">
           <RecipeRouter />
         </Route>
-        <Route exact path="/new">
+        <Route path="/new">
           <FormRecipe />
         </Route>
-        <Route exact path="/edit">
+        <Route path="/edit">
           <ListEditRecipe />
         </Route>
       </div>
