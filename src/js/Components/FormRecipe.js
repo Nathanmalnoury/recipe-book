@@ -1,165 +1,148 @@
-import React, { Component } from "react";
+import React, { useContext, useState } from "react";
 import TypeRecipeInput from "./TypeRecipeInput";
 import ButtonSubmit from "./ButtonSubmit";
 import { getPostVar } from "../utils";
 import { ApiContext } from "../Context/ApiContext";
 
-export default class FormRecipe extends Component {
-  initialState = {
-    url: "",
-    typeRecipe: "",
-    errorUrl: "",
-    errorType: "",
-    addingRecipe: undefined,
-    recipeAdded: undefined,
-  };
-  constructor(props) {
-    super(props);
-    this.state = this.initialState;
-    this.createRecipe = this.createRecipe.bind(this);
-    this.updateUrl = this.updateUrl.bind(this);
-    this.handleClickRadio = this.handleClickRadio.bind(this);
-    this.validateForm = this.validateForm.bind(this);
-  }
-  updateUrl(event) {
-    this.setState({ url: event.target.value });
-  }
+const apiUrlCreateRecipe = process.env.REACT_APP_CREATE_NEW;
 
-  validateForm() {
-    const { url, typeRecipe } = this.state;
-    this.setState({ errorType: "", errorUrl: "" });
+const FormRecipe = () => {
+  const [url, setUrl] = useState("");
+  const [typeRecipe, setTypeRecipe] = useState("");
+  const [loading, setLoading] = useState(undefined);
+  const [success, setSuccess] = useState(undefined);
+  const [errorUrl, setErrorUrl] = useState("");
+  const [errorType, setErrorType] = useState("");
+  const [message, setMessage] = useState("");
+  const savedData = useContext(ApiContext);
+
+  function validateForm() {
+    setErrorType("");
+    setErrorUrl("");
     let isOK = true;
-
     if (typeRecipe === "") {
-      this.setState({ errorType: "Please select a type of recipe" });
+      setErrorType("Please select a type of recipe");
       isOK = false;
     }
-    if (url === "") {
-      this.setState({ errorUrl: "Please enter the url to the recipe" });
+    if (url.length < 8) {
+      setErrorUrl("Please enter the url to the recipe");
       isOK = false;
     } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
-      this.setState({ errorUrl: "Url is not properly formatted." });
+      setErrorUrl("Url is not properly formatted.");
       isOK = false;
     }
     return isOK;
   }
 
-  createRecipe(event) {
+  function createRecipe(event) {
     event.preventDefault();
-    if (this.validateForm()) {
-      this.setState({ addingRecipe: true });
+    if (validateForm()) {
+      setLoading(true);
       fetch(
-        process.env.REACT_APP_CREATE_NEW,
-        getPostVar({ url: this.state.url, typeRecipe: this.state.typeRecipe })
+        apiUrlCreateRecipe,
+        getPostVar({ url: url, typeRecipe: typeRecipe })
       )
         .then((response) => {
-          let newState;
           if (response.ok) {
-            newState = {
-              recipeAdded: true,
-              message: "Recipe added !",
-            };
-            ApiContext.shouldUpdate = true;
+            setSuccess(true);
+            setMessage("Recipe added !");
+            savedData.shouldUpdate = true;
+            // restores the initials values of fields:
+            setUrl("");
+            setTypeRecipe("");
           } else {
-            newState = { recipeAdded: false, message: "API Error" };
+            setSuccess(false);
+            setMessage("API error");
             console.log(response);
           }
-          this.setState({ ...this.initialState, ...newState });
           return response.json();
         })
         .then((response) => {
           if (response.message) {
-            this.setState({ message: response.message });
+            setMessage(response.message);
           }
         })
-        .catch(() => {
-          this.setState({
-            recipeAdded: false,
-          });
+        .catch((e) => {
+          console.log(e);
+          setSuccess(false);
         })
         .finally(() => {
-          this.setState({ addingRecipe: false });
+          setLoading(false);
         });
     }
   }
-  handleClickRadio(event) {
-    this.setState({ typeRecipe: event.target.value });
-  }
-  render() {
-    return (
-      <div id="container">
-        <div id="form-container">
-          <h1>Enter a new recipe:</h1>
-          <hr />
+  const handleRadioChange = (e) => setTypeRecipe(e.target.value);
+  return (
+    <div id="container">
+      <div id="form-container">
+        <h1>Enter a new recipe:</h1>
+        <hr />
 
-          <form onSubmit={this.createRecipe} className="new-recipe">
-            <div id="url-form-container">
-              <h3>Recipe's URL</h3>
-              <input
-                type="text"
-                className={`url-recipe${this.state.errorUrl ? "-error" : ""}`}
-                placeholder="http://best-recipe.com"
-                onChange={this.updateUrl}
-                value={this.state.url}
-              />
-              {this.state.errorUrl !== "" && (
-                <p id="error-msg">{this.state.errorUrl}</p>
+        <form onSubmit={createRecipe} className="new-recipe">
+          <div id="url-form-container">
+            <h3>Recipe's URL</h3>
+            <input
+              type="text"
+              className={`url-recipe${errorUrl ? "-error" : ""}`}
+              placeholder="http://best-recipe.com"
+              onChange={(e) => setUrl(e.target.value)}
+              value={url}
+            />
+            {errorUrl !== "" && <p id="error-msg">{errorUrl}</p>}
+          </div>
+
+          <div id="dish-radio-choices">
+            <h3>Type of dish</h3>
+            <div id="inputs">
+              <div id={`inputs-choices${errorType ? "-error" : ""}`}>
+                <TypeRecipeInput
+                  value="starter"
+                  onChange={handleRadioChange}
+                  checked={typeRecipe === "starter"}
+                >
+                  <span role="img" aria-label="salad">
+                    🥗
+                  </span>
+                  Starter
+                </TypeRecipeInput>
+                <TypeRecipeInput
+                  value="main"
+                  onChange={handleRadioChange}
+                  checked={typeRecipe === "main"}
+                >
+                  <span role="img" aria-label="spaghetti">
+                    🍝
+                  </span>
+                  Main
+                </TypeRecipeInput>
+                <TypeRecipeInput
+                  onChange={handleRadioChange}
+                  checked={typeRecipe === "dessert"}
+                  value="dessert"
+                >
+                  <span role="img" aria-label="strawberry pudding">
+                    🍰
+                  </span>
+                  Dessert
+                </TypeRecipeInput>
+              </div>
+              {errorType !== "" && (
+                <div>
+                  <p id="error-msg">{errorType}</p>
+                </div>
               )}
             </div>
-
-            <div id="dish-radio-choices">
-              <h3>Type of dish</h3>
-              <div id="inputs">
-                <div
-                  id={`inputs-choices${this.state.errorType ? "-error" : ""}`}
-                >
-                  <TypeRecipeInput
-                    value="starter"
-                    onChange={this.handleClickRadio}
-                    checked={this.state.typeRecipe === "starter"}
-                  >
-                    <span role="img" aria-label="salad">
-                      🥗
-                    </span>
-                    Starter
-                  </TypeRecipeInput>
-                  <TypeRecipeInput
-                    value="main"
-                    onChange={this.handleClickRadio}
-                    checked={this.state.typeRecipe === "main"}
-                  >
-                    <span role="img" aria-label="spaghetti">
-                      🍝
-                    </span>
-                    Main
-                  </TypeRecipeInput>
-                  <TypeRecipeInput
-                    onChange={this.handleClickRadio}
-                    checked={this.state.typeRecipe === "dessert"}
-                    value="dessert"
-                  >
-                    <span role="img" aria-label="strawberry pudding">
-                      🍰
-                    </span>
-                    Dessert
-                  </TypeRecipeInput>
-                </div>
-                {this.state.errorType !== "" && (
-                  <div>
-                    <p id="error-msg">{this.state.errorType}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-            <ButtonSubmit
-              onClick={this.createRecipe}
-              showLoading={this.state.addingRecipe}
-              showSuccess={this.state.recipeAdded}
-              message={this.state.message}
-            />
-          </form>
-        </div>
+          </div>
+          <ButtonSubmit
+            onClick={createRecipe}
+            showLoading={loading}
+            showSuccess={success}
+            message={message}
+          />
+        </form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default FormRecipe;
