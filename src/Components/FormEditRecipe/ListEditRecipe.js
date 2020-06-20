@@ -1,7 +1,7 @@
 import React from "react";
 import useFetch from "../Hooks/useFetch";
-import LoaderContainer from "./LoaderContainer";
-import ErrorContainer from "./ErrorContainer";
+import LoaderContainer from "../Misc/LoaderContainer";
+import ErrorContainer from "../Misc/ErrorContainer";
 
 const ListEditRecipe = () => {
   const { data, loading, error } = useFetch();

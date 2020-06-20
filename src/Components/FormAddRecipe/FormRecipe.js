@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import TypeRecipeInput from "./TypeRecipeInput";
-import ButtonSubmit from "./ButtonSubmit";
-import { getPostVar } from "../utils";
+import ButtonSubmit from "../Misc/ButtonSubmit";
+import { getPostVar } from "../../utils";
 import { ApiContext } from "../Context/ApiContext";
 
 const apiUrlCreateRecipe = process.env.REACT_APP_CREATE_NEW;

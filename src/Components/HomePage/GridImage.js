@@ -1,9 +1,9 @@
 import React from "react";
-import LoaderContainer from "./LoaderContainer";
+import LoaderContainer from "../Misc/LoaderContainer";
 import useFetch from "../Hooks/useFetch";
-import ErrorContainer from "./ErrorContainer";
+import ErrorContainer from "../Misc/ErrorContainer";
 import GridTile from "./GridTile";
-import { openRecipeInBrowser } from "../utils";
+import { openRecipeInBrowser } from "../../utils";
 
 const GridImage = () => {
   const { data, loading, error } = useFetch();

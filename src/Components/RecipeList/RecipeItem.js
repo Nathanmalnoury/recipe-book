@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 import { ApiContext } from "../Context/ApiContext";
-import { openRecipeInBrowser } from "../utils";
+import { openRecipeInBrowser } from "../../utils";
 const publicImageUrl = process.env.PUBLIC_URL + "/img";
 
 const RecipeItem = (props) => {
@@ -37,6 +37,7 @@ const RecipeItem = (props) => {
     setFavourite(!favourite);
     dataSaved.shouldUpdate = true;
   };
+  const styleStar = { fontSize: 30 };
 
   return (
     <div
@@ -50,12 +51,9 @@ const RecipeItem = (props) => {
         </div>
         <div className="img-container">
           {favourite ? (
-            <StarIcon style={{ fontSize: 30 }} onClick={handleFavourite} />
+            <StarIcon style={styleStar} onClick={handleFavourite} />
           ) : (
-            <StarBorderIcon
-              style={{ fontSize: 30 }}
-              onClick={handleFavourite}
-            />
+            <StarBorderIcon style={styleStar} onClick={handleFavourite} />
           )}
         </div>
       </div>

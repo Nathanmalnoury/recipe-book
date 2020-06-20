@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, BrowserRouter } from "react-router-dom";
-import FormRecipe from "./Components/FormRecipe";
-import RecipeRouter from "./Components/RecipeRouter";
-import ListEditRecipe from "./Components/ListEditRecipe";
-import MainNav from "./Components/MainNav";
-import Header from "./Components/Header";
-import GridImage from "./Components/GridImage";
-import "../CSS/Main.scss";
+import FormRecipe from "../FormAddRecipe/FormRecipe";
+import RecipeRouter from "./RouterListRecipe";
+import ListEditRecipe from "../FormEditRecipe/ListEditRecipe";
+import MainNav from "../Navs/MainNav";
+import Header from "../Navs/Header";
+import GridImage from "../HomePage/GridImage";
+import "../../CSS/Main.scss";
 
-const Main = () => {
+const RouterMain = () => {
   return (
     <BrowserRouter>
       <Header />
@@ -31,4 +31,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default RouterMain;

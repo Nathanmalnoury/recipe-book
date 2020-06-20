@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Main from "./js/Main";
-import { ApiContext, initialData } from "./js/Context/ApiContext";
+import Main from "./Components/Router/RouterMain";
+import { ApiContext, initialData } from "./Components/Context/ApiContext";
 
 const mountNode = document.querySelector("#root");
 

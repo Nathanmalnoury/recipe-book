@@ -1,9 +1,9 @@
 import React from "react";
 import RecipeItem from "./RecipeItem";
-import LoaderContainer from "./LoaderContainer";
-import ErrorContainer from "./ErrorContainer";
+import LoaderContainer from "../Misc/LoaderContainer";
+import ErrorContainer from "../Misc/ErrorContainer";
 import useFetch from "../Hooks/useFetch";
-import { getPostVar, recipeSorter } from "../utils";
+import { getPostVar, recipeSorter } from "../../utils";
 
 const urlPostRecipe = process.env.REACT_APP_POST_FAVOURITE;
 
