@@ -6,7 +6,7 @@ import { openRecipeInBrowser } from "../utils";
 const publicImageUrl = process.env.PUBLIC_URL + "/img";
 
 const RecipeItem = (props) => {
-  const [favourite, setFavourite] = useState(false);
+  const [favourite, setFavourite] = useState(props.item.favorite);
   const dataSaved = useContext(ApiContext);
   const getImageTag = () => {
     const defaultTag = (filename) => (
@@ -49,7 +49,7 @@ const RecipeItem = (props) => {
           <p className="recipe-title">{props.item.title}</p>
         </div>
         <div className="img-container">
-          {props.item.favorite || favourite ? (
+          {favourite ? (
             <StarIcon style={{ fontSize: 30 }} onClick={handleFavourite} />
           ) : (
             <StarBorderIcon
