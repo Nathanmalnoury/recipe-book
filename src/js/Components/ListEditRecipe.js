@@ -1,37 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
+import useFetch from "../Hooks/useFetch";
+import LoaderContainer from "./LoaderContainer";
+import ErrorContainer from "./ErrorContainer";
 
-export default class ListEditRecipe extends Component {
-  constructor() {
-    super();
-    this.state = { loading: true };
-    this.getRecipes = this.getRecipes.bind(this);
-  }
-  componentDidMount() {
-    fetch(process.env.REACT_APP_GET_ALL)
-      .then((resp) => {
-        return resp.json();
-      })
-      .then((result) => {
-        this.setState({ recipe: result });
-      })
-      .catch((error) => {
-        console.log("Error occured", error);
-        this.setState({ error: true });
-      })
-      .finally(() => {
-        this.setState({ loading: false });
-      });
-  }
-  getRecipes() {
-    if (this.state.loading === false) {
-      return this.state.recipe.map((rec) => {
-        // TODO : Needs a card component to modify each recipe.
+const ListEditRecipe = () => {
+  const { data, loading, error } = useFetch();
+  return loading ? (
+    <LoaderContainer />
+  ) : error ? (
+    <ErrorContainer message={error} />
+  ) : (
+    <ul>
+      {data.map((r) => (
+        <li key={r.id}>{r.title}</li>
+      ))}
+    </ul>
+  );
+};
 
-        return <li>{rec.title}</li>;
-      });
-    }
-  }
-  render() {
-    return <ul>{this.getRecipes()}</ul>;
-  }
-}
+export default ListEditRecipe;
