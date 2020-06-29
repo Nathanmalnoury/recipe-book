@@ -1,0 +1,23 @@
+.card-edit-container {
+  padding: 0;
+}
+
+.card-edit-recipe {
+  background-color: red;
+  margin: 15px 0 15px 0;
+  height: 75px;
+  display: flex;
+  img {
+    height: 100%;
+    object-fit: cover;
+    // width: 100%;
+  }
+}
+.card-edit-body {
+  width: 100%;
+  background-color: yellowgreen;
+  h3,
+  p {
+    margin: 5px;
+  }
+}

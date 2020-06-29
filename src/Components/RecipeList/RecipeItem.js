@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 import { ApiContext } from "../Context/ApiContext";
-import { openRecipeInBrowser } from "../../utils";
+import { openRecipeInBrowser, getImageSrc } from "../../utils";
 const publicImageUrl = process.env.PUBLIC_URL + "/img";
 
 const RecipeItem = (props) => {
@@ -13,12 +13,7 @@ const RecipeItem = (props) => {
       <img src={`${publicImageUrl}/${filename}`} alt={filename}></img>
     );
     if (props.item.image) {
-      return (
-        <img
-          src={`data:${props.item.image["content-type"]};base64,${props.item.image.content}`}
-          alt={props.item.title}
-        />
-      );
+      return <img src={getImageSrc(props.item.image)} alt={props.item.title} />;
     } else {
       switch (props.item.type_recipe) {
         case "starter":

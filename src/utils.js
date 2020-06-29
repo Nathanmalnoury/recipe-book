@@ -30,4 +30,7 @@ const openRecipeInBrowser = (e, recipeId) => {
   win.focus();
 };
 
-export { getPostVar, recipeSorter, openRecipeInBrowser };
+const getImageSrc = (image) =>
+  `data:${image["content-type"]};base64,${image.content}`;
+
+export { getPostVar, recipeSorter, openRecipeInBrowser, getImageSrc };
