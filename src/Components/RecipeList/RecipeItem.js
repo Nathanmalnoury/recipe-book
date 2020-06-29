@@ -42,7 +42,7 @@ const RecipeItem = (props) => {
   return (
     <div
       className="recipe-flex"
-      onClick={(e) => openRecipeInBrowser(e, props.id)}
+      onClick={(e) => openRecipeInBrowser(e, props.item.id)}
     >
       {getImageTag()}
       <div id="flex-col-title">
