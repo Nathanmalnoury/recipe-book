@@ -60,7 +60,10 @@ class Scrapper():
         try:
             image_url = self.find_image_src(title)
             image_type = self.get_image_type(image_url)
-            image = BytesIO(requests.get(image_url).content)
+            req_image = requests.get(image_url, headers=self.headers)
+            assert req_image.ok
+            image = BytesIO(req_image.content)
+
         except Exception:
             print("No image")
             image = None
@@ -113,6 +116,11 @@ class Scrapper():
             "BMP": "image/bmp",
         }
         extension = image_url.split(".")[-1].upper()
+        if "?" in extension:
+            # for bbcgood food type of url endding in :
+            # recipe-image-legacy-id--1079477_11.jpg?itok=uE-Vm9FZ
+
+            extension = extension.split("?")[0]
         print(extension, ext_to_type.get(extension))
         return ext_to_type.get(extension)
 
