@@ -1,6 +1,5 @@
 #! usr/bin/python3.8
 from flask import Flask, request, abort
-from flask import wrappers
 from flask_cors import CORS
 from mongoengine.errors import NotUniqueError
 from functools import wraps

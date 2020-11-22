@@ -1,6 +1,6 @@
-from .scrapper import Scrapper
-from .bbcScrapper import BbcScrapper
-from .bbcGoodFoodScrapper import BbcGoodFoodScrapper
+from scrappers.scrapper import Scrapper
+from scrappers.bbcScrapper import BbcScrapper
+from scrappers.bbcGoodFoodScrapper import BbcGoodFoodScrapper
 
 
 def scrap(url, type_recipe):

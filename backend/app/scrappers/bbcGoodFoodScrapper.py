@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from .scrapper import Scrapper
+from scrappers.scrapper import Scrapper
 import requests
 from io import BytesIO
 from slugify import slugify

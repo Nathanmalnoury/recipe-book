@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from .scrapper import Scrapper
+from scrappers.scrapper import Scrapper
 import requests
 from io import BytesIO
 
@@ -19,7 +19,8 @@ class BbcScrapper(Scrapper):
         titles = self.get_soup().find_all(name="h1")
         for match in titles:
             try:
-                if 'content-title__text' in match.get('class'):
+                print(match.get('class'))
+                if 'title' in " ".join(match.get('class')):
                     return match.text.strip()
 
             except:
@@ -37,8 +38,9 @@ class BbcScrapper(Scrapper):
         self.get_soup()
         try:
             title = self.find_title()
-        except Exception:
+        except Exception as e:
             print('Exception in find title')
+            print(e.with_traceback(6))
             title = None
 
         try:
