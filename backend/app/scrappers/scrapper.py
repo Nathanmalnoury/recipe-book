@@ -73,9 +73,14 @@ class Scrapper():
             "image_type": image_type,
             "image": image,
             "title": title,
-            "content": str(self.soup),
             "type_recipe": self.type_recipe,
         }
+
+        if self.url.startswith('https://cooking.nytimes.com'):
+            recipe_dict['content'] = str(self.soup)
+        else:
+            recipe_dict['redirect'] = self.url
+
         return recipe_dict
 
     def find_title(self):
