@@ -99,7 +99,7 @@ class Scrapper():
             return self.get_soup().find('img').src
 
         for tag in self.get_soup().find_all('img'):
-            if tag.get('alt') == title_recipe or tag.get('title') == title_recipe:
+            if tag.get('alt').strip() == title_recipe or tag.get('title').strip() == title_recipe:
                 src = urljoin(self.url, tag.get('src'))
                 return src
 

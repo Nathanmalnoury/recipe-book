@@ -11,12 +11,12 @@ CORS(app, resources={r"*": {"origins": "*"}})
 mongo = MongoClient()
 
 
-@app.route('/recipe/all')
+@app.route('/recipe/')
 def all_recipe():
     return mongo.get_all_recipes()
 
 
-@app.route('/create/recipe/', methods=['POST'])
+@app.route('/recipe/', methods=['POST'])
 def create_recipe():
     json_data = request.get_json()
     url = json_data.get('url')
@@ -32,6 +32,14 @@ def create_recipe():
         Scrapper(url=url, type_recipe=type_recipe).scrap()
     )
     return {'success': True, 'id': str(new_id)}
+
+
+@app.route('/recipe/', methods=['PUT'])
+def update_recipes():
+    json_data = request.get_json()
+    mongo.update(json_data)
+
+    return {}
 
 
 @app.route('/recipe/favourite', methods=["POST"])

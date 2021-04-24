@@ -7,15 +7,19 @@ const ItemEditRecipe = (props) => {
   const { title, type_recipe, image, id } = props.recipe;
   const handleChangeImage = (e) => {
     const onLoadEnd = (e) => {
-      const newImage = { content: e.target.result, "content-type": file.type };
+      console.log(fileReader.result);
+      const newImage = {
+        content: fileReader.result,
+        "content-type": file.type,
+      };
       handleChange(id, { image: newImage });
     };
     const fileReader = new FileReader();
     const file = e.target.files[0];
     fileReader.onloadend = onLoadEnd;
-    fileReader.readAsText(file);
+    fileReader.readAsBinaryString(file);
   };
-  
+
   return (
     <div className="card-edit-recipe">
       {image && image["content-type"] && (
